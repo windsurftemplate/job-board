@@ -1,6 +1,8 @@
 # Job Board Platform
 
-A modern job board platform built with Next.js 13, featuring a beautiful UI, role-based authentication, and seamless job posting and application processes.
+https://job-board-bq5r.vercel.app/
+
+A modern job board platform built with Next.js 15, featuring a beautiful UI, role-based authentication, and seamless job posting and application processes.
 
 ## Features
 
@@ -15,7 +17,7 @@ A modern job board platform built with Next.js 13, featuring a beautiful UI, rol
 
 ## Tech Stack
 
-- **Framework**: Next.js 13 (App Router)
+- **Framework**: Next.js 15 (App Router)
 - **Styling**: Tailwind CSS
 - **UI Components**: shadcn/ui
 - **Authentication**: NextAuth.js
