@@ -1,5 +1,6 @@
 'use client'
 
+import { Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import JobSearch from '@/components/JobSearch'
@@ -10,6 +11,7 @@ import { Briefcase, MapPin, DollarSign, Building2 } from 'lucide-react'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { cn } from '@/lib/utils'
 import { motion } from 'framer-motion'
+import { Icons } from '@/components/icons'
 
 interface Job {
   id: string
@@ -23,6 +25,33 @@ interface Job {
   requirements: string
   createdAt: string
 }
+
+const defaultJobs: Job[] = [
+  {
+    id: '1',
+    title: 'Senior Software Engineer',
+    company: 'Tech Corp',
+    location: 'San Francisco, CA',
+    type: 'full-time',
+    category: 'technology',
+    salary: '$150,000 - $200,000',
+    description: 'We are looking for a senior software engineer...',
+    requirements: 'Minimum 5 years of experience...',
+    createdAt: '2024-01-01T00:00:00.000Z',
+  },
+  {
+    id: '2',
+    title: 'Product Designer',
+    company: 'Design Studio',
+    location: 'New York, NY',
+    type: 'full-time',
+    category: 'design',
+    salary: '$100,000 - $140,000',
+    description: 'Join our design team...',
+    requirements: 'Strong portfolio and 3+ years experience...',
+    createdAt: '2024-01-02T00:00:00.000Z',
+  },
+]
 
 const container = {
   hidden: { opacity: 0 },
@@ -46,10 +75,10 @@ const item = {
   }
 }
 
-export default function Jobs() {
+function JobList() {
   const searchParams = useSearchParams()
-  const [jobs, setJobs] = useState<Job[]>([])
-  const [loading, setLoading] = useState(true)
+  const [jobs, setJobs] = useState<Job[]>(defaultJobs)
+  const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
   useEffect(() => {
@@ -73,7 +102,9 @@ export default function Jobs() {
       }
     }
 
-    fetchJobs()
+    if (searchParams.toString()) {
+      fetchJobs()
+    }
   }, [searchParams])
 
   return (
@@ -189,5 +220,17 @@ export default function Jobs() {
         </motion.div>
       )}
     </div>
+  )
+}
+
+export default function JobsPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex items-center justify-center min-h-screen">
+        <Icons.spinner className="h-8 w-8 animate-spin" />
+      </div>
+    }>
+      <JobList />
+    </Suspense>
   )
 }
