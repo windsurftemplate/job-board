@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
@@ -11,7 +11,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Icons } from '@/components/icons'
 import { motion } from 'framer-motion'
 
-export default function SignUp() {
+function SignUpForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [error, setError] = useState('')
@@ -176,5 +176,17 @@ export default function SignUp() {
         </div>
       </div>
     </motion.div>
+  )
+}
+
+export default function SignUpPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex items-center justify-center min-h-screen">
+        <Icons.spinner className="h-8 w-8 animate-spin" />
+      </div>
+    }>
+      <SignUpForm />
+    </Suspense>
   )
 }
